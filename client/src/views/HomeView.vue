@@ -45,7 +45,7 @@ const fetchUserMedia = ()=>{
   })
 }
 
-const listenIce = (e) => {
+const listenIce = (e: any) => {
   console.log('> Ice candidate found')
   if(e.candidate){
     try{
@@ -84,7 +84,7 @@ const createPeerConnection = (offer?: RTCSessionDescriptionInit)=>{
         console.log("Got a track from the other peer!! How excting");
         console.log(e);
         e.streams[0].getTracks().forEach(track=>{
-          remoteStream.addTrack(track, remoteStream);
+          remoteStream.addTrack(track);
         });
       });
 
@@ -157,7 +157,6 @@ const handleInvite = async (msg: MakeOffer) => {
 
 const handleId = (msg: SetId) => {
   userId = msg.id;
-  console.log("JERE");
 }
 
 const handleIce = (msg: IceCandidate) => {

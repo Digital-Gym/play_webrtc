@@ -132,14 +132,20 @@ export default function socketControll(ctx: Context){
   const socket = ctx.upgrade();
 
   const handleQueue = () => {
-    console.log("Connected!");
+    console.log("Someone Connected!");
 
     const newId = crypto.randomUUID();
     users.set(newId, {userId: newId, socket: socket} as User);
     socket.send(jsend({type: 'set-id', id: newId} as SetId));
   }
 
+  const handleClose = () => {
+    console.log("Someone Disconnected");
+    // todo
+  }
+
   socket.onopen = handleQueue;
+  socket.onclose = handleClose;
 
   socket.onmessage = (event) => {
     const msg = jget(event.data) as Event;
